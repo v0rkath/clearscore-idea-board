@@ -36,7 +36,9 @@ function App() {
 
   function cardUpdate(title: string, desc: string, id: string) {
     const cards = ideas.map((idea) =>
-      idea.id === id ? { ...idea, title: title, desc: desc } : idea
+      idea.id === id
+        ? { ...idea, title: title, desc: desc, update: Date() }
+        : idea
     );
     console.log(cards);
     setIdeas(cards);
@@ -66,12 +68,12 @@ function App() {
       case "time-desc":
         return ideaData.sort(
           (a, b) =>
-            new Date(a.updated).getTime() - new Date(b.updated).getTime()
+            new Date(b.updated).getTime() - new Date(a.updated).getTime()
         );
       case "time-asc":
         return ideaData.sort(
           (a, b) =>
-            new Date(b.updated).getTime() - new Date(a.updated).getTime()
+            new Date(a.updated).getTime() - new Date(b.updated).getTime()
         );
       default:
         return [...ideaData];
