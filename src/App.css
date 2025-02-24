@@ -1,0 +1,176 @@
+body {
+  margin: 0 auto;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  padding: 1em;
+  max-width: 1280px;
+  margin: 0 auto;
+  position: relative;
+  height: 90vh;
+}
+
+.card-container {
+  display: flex;
+  gap: 1em;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 3em auto 0;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  border: 1px solid rgb(225, 225, 225);
+  border-radius: 0.5em;
+  padding: 1em;
+}
+
+.card > p {
+  color: rgb(142, 142, 142);
+  font-size: 0.6rem;
+  text-align: right;
+}
+
+.card-top {
+  display: flex;
+  border-bottom: 1px solid rgb(238, 238, 238);
+}
+
+.card-top > p {
+  font-size: 0.6rem;
+  color: rgb(142, 142, 142);
+}
+
+input {
+  background: transparent;
+  color: #000000;
+  border: none;
+  font-family: inherit;
+  font-size: 1rem;
+  margin-bottom: 0.5em;
+  padding: 0.2em;
+}
+
+textarea {
+  background: none;
+  color: #000000;
+  border: none;
+  resize: none;
+  font-family: inherit;
+  font-size: 0.8rem;
+  color: rgb(85, 85, 85);
+  height: 7em;
+  margin-top: 1em;
+}
+
+.idea-modal {
+  border: none;
+  border-radius: 1em;
+  background: #ffffff;
+  color: #000000;
+  border: 1px solid rgb(225, 225, 225);
+}
+
+.create-idea > input,
+.create-idea > textarea {
+  font-size: 0.8rem;
+  background: rgb(244, 244, 244);
+  border-radius: 0.5em;
+  padding: 0.75em;
+  margin-bottom: 0.75em;
+}
+
+.create-idea > textarea {
+  margin-top: 0.5em;
+}
+
+.create-idea {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.navbar {
+  background: rgb(236, 236, 236);
+  padding: 1em;
+  border-bottom: 1px solid rgb(218, 218, 218);
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.12);
+}
+
+.navbar-right {
+  display: flex;
+  gap: 1em;
+}
+
+.navbar-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.toast {
+  border-radius: 0.5em;
+  border: 1px solid rgb(0, 141, 111);
+  padding: 0.5em;
+  color: rgb(56, 56, 56);
+  position: absolute;
+  bottom: 1em;
+  right: 1em;
+  font-size: 1rem;
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.12);
+  opacity: 1;
+  animation-name: fadeInOpacity;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: 0.5s;
+}
+
+@keyframes fadeInOpacity {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.dropdown-button {
+  background: rgb(54, 54, 54);
+  color: #fff;
+  position: relative;
+}
+
+.dropdown-button:hover {
+  background: rgb(43, 43, 43);
+}
+
+.dropdown-content {
+  display: block;
+  position: absolute;
+  background: #ffffff;
+  padding: 0.5em;
+  border: 1px solid rgb(218, 218, 218);
+  border-radius: 0.5em;
+  top: 4em;
+  z-index: 10;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+.dropdown-content > div {
+  margin: 0.5em 0;
+  font-size: 0.8rem;
+  cursor: pointer;
+  padding: 0.4em;
+  border-radius: 0.25em;
+}
+
+.dropdown-content > div:hover {
+  background: rgb(222, 222, 222);
+}
