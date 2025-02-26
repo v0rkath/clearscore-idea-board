@@ -6,7 +6,7 @@ import { Idea } from "../App";
 type Props = {
   setIdea: (data: Idea[]) => void;
   idea: Idea[];
-}
+};
 
 export default function CreateIdea({ setIdea, idea }: Props) {
   const inputEl = useRef<HTMLInputElement>(null);
@@ -38,6 +38,7 @@ export default function CreateIdea({ setIdea, idea }: Props) {
           Idea:
         </label>
         <input
+          required
           autoFocus
           className="mb-2 rounded-sm border border-slate-400 bg-slate-50 p-2 text-sm text-slate-900"
           type="text"
@@ -49,6 +50,7 @@ export default function CreateIdea({ setIdea, idea }: Props) {
           Description:
         </label>
         <textarea
+          required
           className="resize-none rounded-sm border border-slate-400 bg-slate-50 p-2 text-sm text-slate-900"
           id="description"
           name="description"
