@@ -1,4 +1,4 @@
-import "./App.css";
+import CreateIdea from "./components/CreateIdea";
 import IdeaCard from "./components/IdeaCard";
 import Navbar from "./components/Navbar";
 import Toast from "./components/Toast";
@@ -62,9 +62,9 @@ function App() {
 
     switch (sortType) {
       case "alpha-desc":
-        return ideaData.sort((a, b) => a.title.localeCompare(b.title));
-      case "alpha-asc":
         return ideaData.sort((a, b) => b.title.localeCompare(a.title));
+      case "alpha-asc":
+        return ideaData.sort((a, b) => a.title.localeCompare(b.title));
       case "time-desc":
         return ideaData.sort(
           (a, b) =>
@@ -84,9 +84,10 @@ function App() {
 
   return (
     <>
-      <Navbar setIdeas={setIdeas} ideas={ideas} setSort={setSorted} />
-      <main className="main">
-        <div className="card-container">
+      <Navbar setSort={setSorted} />
+      <main className="flex flex-col self-center p-4 max-w-[1280px] mx-auto relative">
+        <div className="flex gap-4 flex-wrap justify-center my-12 mx-auto">
+          <CreateIdea setIdea={setIdeas} idea={ideas} />
           {sortedCards.map((card) => (
             <IdeaCard
               key={card.id}
