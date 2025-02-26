@@ -1,63 +1,56 @@
+import { toast } from "sonner";
+import { useEffect, useState } from "react";
+
 import CreateIdea from "./components/CreateIdea";
 import IdeaCard from "./components/IdeaCard";
 import Navbar from "./components/Navbar";
-import Toast from "./components/Toast";
-import { useEffect, useState } from "react";
+import { Toaster } from "./components/ui/sonner";
 
-export interface Idea {
+export type Idea = {
   id: string;
   title: string;
   desc: string;
   updated: Date;
-}
+};
 
-export type Sorting = "alpha-desc" | "alpha-asc" | "time-desc" | "time-asc";
+export type SortMethods = "alpha-desc" | "alpha-asc" | "time-desc" | "time-asc";
 
 function App() {
   const [ideas, setIdeas] = useState<Idea[]>(() => {
     const storedIdeas = localStorage.getItem("ideas");
     return storedIdeas ? JSON.parse(storedIdeas) : [];
   });
-  const [toastAlert, setToastAlert] = useState<boolean>(false);
-  const [sorted, setSorted] = useState<Sorting>("time-desc");
-  const [toastContent, setToastContent] = useState<string>("");
+  const [selectedSort, setSelectedSort] = useState<SortMethods>("time-desc");
 
   useEffect(() => {
     localStorage.setItem("ideas", JSON.stringify(ideas));
-    async function showToast() {
-      setToastAlert(true);
-
-      setTimeout(() => {
-        setToastAlert(false);
-      }, 3000);
-    }
-    showToast();
   }, [ideas]);
 
-  function cardUpdate(title: string, desc: string, id: string) {
+  function updateCard(updatedIdea: Idea) {
     const cards = ideas.map((idea) =>
-      idea.id === id
-        ? { ...idea, title: title, desc: desc, update: Date() }
-        : idea
+      idea.id === updatedIdea.id
+        ? {
+            ...idea,
+            title: updatedIdea.title,
+            desc: updatedIdea.desc,
+            update: new Date(),
+          }
+        : idea,
     );
-    console.log(cards);
     setIdeas(cards);
-    localStorage.setItem("ideas", JSON.stringify(cards));
-    setToastContent("Card updated");
   }
 
   function deleteCard(id: string) {
     const cards = [...ideas];
     const index = cards.findIndex((card) => card.id === id);
-
     cards.splice(index, 1);
-    console.log(cards);
-
+    // .filter() not used in order to have access to the card title for the toast
     setIdeas(cards);
-    setToastContent("Card deleted");
+
+    toast(`Deleted: ${ideas[index].title} Idea`);
   }
 
-  function sortCards(sortType: Sorting) {
+  function sortCards(sortType: SortMethods) {
     const ideaData = [...ideas];
 
     switch (sortType) {
@@ -68,41 +61,38 @@ function App() {
       case "time-desc":
         return ideaData.sort(
           (a, b) =>
-            new Date(b.updated).getTime() - new Date(a.updated).getTime()
+            new Date(b.updated).getTime() - new Date(a.updated).getTime(),
         );
       case "time-asc":
         return ideaData.sort(
           (a, b) =>
-            new Date(a.updated).getTime() - new Date(b.updated).getTime()
+            new Date(a.updated).getTime() - new Date(b.updated).getTime(),
         );
       default:
         return [...ideaData];
     }
   }
 
-  const sortedCards = sortCards(sorted);
+  const sortedCards = sortCards(selectedSort);
 
   return (
-    <>
-      <Navbar setSort={setSorted} />
-      <main className="flex flex-col self-center p-4 max-w-[1280px] mx-auto relative">
-        <div className="flex gap-4 flex-wrap justify-center my-12 mx-auto">
+    <div className="h-svh">
+      <Navbar setSort={setSelectedSort} />
+      <main className="relative mx-auto flex max-w-[1280px] flex-col self-center p-4">
+        <div className="mx-auto my-12 flex flex-wrap justify-center gap-4">
           <CreateIdea setIdea={setIdeas} idea={ideas} />
           {sortedCards.map((card) => (
             <IdeaCard
               key={card.id}
-              title={card.title}
-              desc={card.desc}
-              id={card.id}
-              date={card.updated}
+              card={card}
               deleteCard={deleteCard}
-              updateCard={cardUpdate}
+              updateCard={updateCard}
             />
           ))}
         </div>
-        {toastAlert && <Toast content={toastContent} />}
       </main>
-    </>
+      <Toaster visibleToasts={1} />
+    </div>
   );
 }
 

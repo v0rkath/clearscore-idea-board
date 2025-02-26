@@ -1,63 +1,65 @@
-import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import { useState } from "react";
 
-interface IdeaCardProps {
-  title: string;
-  desc: string;
-  id: string;
-  date: Date;
+import { Idea } from "@/App";
+
+type Props = {
+  card: Idea;
   deleteCard: (id: string) => void;
-  updateCard: (title: string, desc: string, index: string) => void;
+  updateCard: (updatedIdea: Idea) => void;
 }
 
-export default function IdeaCard({
-  title,
-  desc,
-  id,
-  date,
-  deleteCard,
-  updateCard,
-}: IdeaCardProps) {
-  const [cardTitle, setCardTitle] = useState(title);
-  const [cardDesc, setCardDesc] = useState(desc);
+export default function IdeaCard({ card, deleteCard, updateCard }: Props) {
+  const [title, setTitle] = useState(card.title);
+  const [desc, setDesc] = useState(card.desc);
 
-  const count = cardDesc.length;
+  const count = desc.length;
 
-  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setCardTitle(e.target.value);
+  function handleChange(
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) {
+    const { type, value } = e.target;
+    if (type === "text") {
+      setTitle(value);
+      toast(`Updated Title: '${card.title}' Idea.`, {
+        description: `'${card.title}' -> '${value}'`,
+      });
+      card.title = value;
+    } else if (type == "textarea") {
+      setDesc(value);
+      card.desc = value;
+      toast(`Updated Description: '${card.title}' Idea.`);
+    }
+
+    updateCard(card);
   }
-
-  function handleTextAreaChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
-    setCardDesc(e.target.value);
-  }
-
-  useEffect(() => updateCard(cardTitle, cardDesc, id), [cardTitle, cardDesc]);
 
   return (
-    <div className="flex flex-col text-left border border-slate-200 rounded-lg p-4 min-w-[380px] max-w-[380px] justify-between">
-      <div className="flex border-b border-slate-200 items-center pb-2 justify-between">
+    <div className="flex max-w-[380px] min-w-[380px] flex-col justify-between rounded-lg border border-slate-200 bg-white p-4 text-left">
+      <div className="flex items-center justify-between border-b border-slate-200 pb-2">
         <input
           className="text-lg font-medium"
           type="text"
-          value={cardTitle}
-          onChange={handleInputChange}
+          value={title}
+          onChange={handleChange}
         />
-        <p className="text-xs text-slate-400">
-          {new Date(date).toDateString()}
+        <p className="text-xs whitespace-nowrap text-slate-400">
+          {new Date(card.updated).toDateString()}
         </p>
       </div>
 
       <textarea
-        className="text-sm text-slate-500 h-24 resize-none mt-2"
-        value={cardDesc}
+        className="mt-2 h-24 resize-none text-sm text-slate-500"
+        value={desc}
         maxLength={140}
-        onChange={handleTextAreaChange}
+        onChange={handleChange}
       />
-      <p className="text-xs text-slate-400 text-right">
+      <p className="text-right text-xs text-slate-400">
         {count > 130 ? `${count} / 140` : null}
       </p>
       <button
-        className="bg-slate-900 text-slate-50 px-2 py-3 rounded-md mt-2 hover:bg-slate-800"
-        onClick={() => deleteCard(id)}
+        className="mt-2 rounded-md bg-black px-2 py-3 text-slate-50 hover:bg-slate-900"
+        onClick={() => deleteCard(card.id)}
       >
         Delete
       </button>

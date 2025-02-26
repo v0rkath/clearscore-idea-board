@@ -1,12 +1,16 @@
-import { Idea } from "../App";
 import { v4 as uuidv4 } from "uuid";
+import { useRef } from "react";
 
-interface CreateIdeaProps {
+import { Idea } from "../App";
+
+type Props = {
   setIdea: (data: Idea[]) => void;
   idea: Idea[];
 }
 
-export default function CreateIdea({ setIdea, idea }: CreateIdeaProps) {
+export default function CreateIdea({ setIdea, idea }: Props) {
+  const inputEl = useRef<HTMLInputElement>(null);
+
   function addIdea(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -18,35 +22,39 @@ export default function CreateIdea({ setIdea, idea }: CreateIdeaProps) {
       updated: new Date(),
     };
 
+    event.currentTarget.reset();
+    inputEl.current?.focus();
+
     setIdea([...idea, ideaData]);
-    console.log(idea);
   }
 
   return (
-    <div className="flex flex-col text-left rounded-lg p-4 bg-black text-slate-200 min-w-[380px]">
-      <h1 className="font-medium text-lg border-b border-slate-300">
+    <div className="flex min-w-[380px] flex-col rounded-lg bg-black p-4 text-left text-slate-200">
+      <h1 className="border-b border-slate-800 text-lg font-medium">
         Create idea
       </h1>
-      <form className="flex flex-col mt-2" onSubmit={addIdea}>
-        <label className="text-sm" htmlFor="idea">
+      <form className="mt-2 flex flex-col" onSubmit={addIdea}>
+        <label className="mb-1 text-sm" htmlFor="idea">
           Idea:
         </label>
         <input
-          className="border rounded-sm border-slate-400 bg-slate-300 mb-2 text-slate-900 text-sm p-2"
+          autoFocus
+          className="mb-2 rounded-sm border border-slate-400 bg-slate-50 p-2 text-sm text-slate-900"
           type="text"
           id="idea"
           name="idea"
+          ref={inputEl}
         />
-        <label className="text-sm" htmlFor="description">
+        <label className="mb-1 text-sm" htmlFor="description">
           Description:
         </label>
         <textarea
-          className="border rounded-sm border-slate-400 bg-slate-300 resize-none text-slate-900 text-sm p-2"
+          className="resize-none rounded-sm border border-slate-400 bg-slate-50 p-2 text-sm text-slate-900"
           id="description"
           name="description"
           maxLength={140}
         />
-        <button className="bg-white mt-4 p-1.5 rounded-sm text-slate-900 font-medium hover:bg-slate-200">
+        <button className="mt-4 rounded-sm bg-white p-1.5 font-medium text-slate-900 hover:bg-slate-200">
           Create
         </button>
       </form>

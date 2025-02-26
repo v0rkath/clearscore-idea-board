@@ -1,3 +1,4 @@
+import { SortMethods } from "../App";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -5,21 +6,19 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { Sorting } from "../App";
-
-interface Props {
-  setSort: (sortType: Sorting) => void;
+type Props = {
+  setSort: (sortType: SortMethods) => void;
 }
 
 export default function Navbar({ setSort }: Props) {
   return (
     <>
-      <nav className="bg-slate-100 p-4 border-b border-slate-300 shadow-sm">
-        <div className="flex justify-between content-center max-w-[1280px] mx-auto items-center">
+      <nav className="border-b border-slate-300 bg-slate-100 p-4 shadow-sm">
+        <div className="mx-auto flex max-w-[1280px] content-center items-center justify-between">
           <div className="font-semibold">Clearscore Idea Board</div>
           <div className="flex gap-4">
             <DropdownMenu>
-              <DropdownMenuTrigger className="bg-slate-950 hover:bg-slate-800 text-slate-50 p-2 px-3 rounded-md">
+              <DropdownMenuTrigger className="rounded-md bg-slate-950 p-2 px-3 text-slate-50 hover:bg-slate-800">
                 Sort Ideas
               </DropdownMenuTrigger>
               <DropdownMenuContent>
