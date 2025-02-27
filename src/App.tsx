@@ -80,7 +80,7 @@ function App() {
       <Navbar setSort={setSelectedSort} />
       <main className="relative mx-auto flex max-w-[1280px] flex-col self-center p-4">
         <div className="mx-auto my-12 flex flex-wrap justify-center gap-4">
-          <CreateIdea setIdea={setIdeas} idea={ideas} />
+          <CreateIdea setIdea={setIdeas} ideas={ideas} />
           {sortedCards.map((card) => (
             <IdeaCard
               key={card.id}

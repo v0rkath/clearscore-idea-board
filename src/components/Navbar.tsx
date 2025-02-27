@@ -8,7 +8,7 @@ import {
 
 type Props = {
   setSort: (sortType: SortMethods) => void;
-}
+};
 
 export default function Navbar({ setSort }: Props) {
   return (

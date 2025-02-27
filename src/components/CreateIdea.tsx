@@ -5,10 +5,10 @@ import { Idea } from "../App";
 
 type Props = {
   setIdea: (data: Idea[]) => void;
-  idea: Idea[];
+  ideas: Idea[];
 };
 
-export default function CreateIdea({ setIdea, idea }: Props) {
+export default function CreateIdea({ setIdea, ideas }: Props) {
   const inputEl = useRef<HTMLInputElement>(null);
 
   function addIdea(event: React.FormEvent<HTMLFormElement>) {
@@ -25,7 +25,7 @@ export default function CreateIdea({ setIdea, idea }: Props) {
     event.currentTarget.reset();
     inputEl.current?.focus();
 
-    setIdea([...idea, ideaData]);
+    setIdea([...ideas, ideaData]);
   }
 
   return (

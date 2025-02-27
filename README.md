@@ -2,9 +2,9 @@
 
 A responsive tool to host and sort your ideas while data is persisted in local storage.
 
-<div align="center">
-    <a href="clearscore-idea-board.vercel.app" target="_blank">Demo</a>
-</div>
+<h4 align="center">
+    <a href="https://clearscore-idea-board.vercel.app" target="_blank">Demo</a>
+</h4>
 
 ![ClearScore Idea Board](./images/clearscore-fed-test.png)
 
