@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 import { Idea } from "../App";
 
@@ -10,6 +10,7 @@ type Props = {
 
 export default function CreateIdea({ setIdea, ideas }: Props) {
   const inputEl = useRef<HTMLInputElement>(null);
+  const [descValue, setDescValue] = useState("");
 
   function addIdea(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -40,23 +41,37 @@ export default function CreateIdea({ setIdea, ideas }: Props) {
         <input
           required
           autoFocus
+          placeholder="Create an idea board website"
           className="mb-2 rounded-sm border border-slate-400 bg-slate-50 p-2 text-sm text-slate-900"
           type="text"
           id="idea"
           name="idea"
           ref={inputEl}
+          data-testid="title-input"
         />
         <label className="mb-1 text-sm" htmlFor="description">
           Description:
         </label>
         <textarea
           required
+          placeholder="A place where I can put my ideas and sort them alphabetically and creation date."
           className="resize-none rounded-sm border border-slate-400 bg-slate-50 p-2 text-sm text-slate-900"
           id="description"
           name="description"
+          value={descValue}
+          onChange={(e) => setDescValue(e.target.value)}
           maxLength={140}
+          data-testid="description-input"
         />
-        <button className="mt-4 rounded-sm bg-white p-1.5 font-medium text-slate-900 hover:bg-slate-200">
+        {descValue.length >= 130 ? (
+          <p className="mt-2 text-right text-xs text-slate-500">
+            {descValue.length}/140
+          </p>
+        ) : null}
+        <button
+          className="mt-4 rounded-sm bg-white p-1.5 font-medium text-slate-900 hover:bg-slate-200"
+          data-testid="submit-button"
+        >
           Create
         </button>
       </form>

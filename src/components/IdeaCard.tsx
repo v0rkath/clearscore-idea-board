@@ -1,13 +1,13 @@
 import { toast } from "sonner";
 import { useState } from "react";
 
-import { Idea } from "@/App";
+import { Idea } from "../App";
 
 type Props = {
   card: Idea;
   deleteCard: (id: string) => void;
   updateCard: (updatedIdea: Idea) => void;
-}
+};
 
 export default function IdeaCard({ card, deleteCard, updateCard }: Props) {
   const [title, setTitle] = useState(card.title);
@@ -42,6 +42,7 @@ export default function IdeaCard({ card, deleteCard, updateCard }: Props) {
           type="text"
           value={title}
           onChange={handleChange}
+          data-testid="card-input"
         />
         <p className="text-xs whitespace-nowrap text-slate-400">
           {new Date(card.updated).toDateString()}
@@ -53,6 +54,7 @@ export default function IdeaCard({ card, deleteCard, updateCard }: Props) {
         value={desc}
         maxLength={140}
         onChange={handleChange}
+        data-testid="card-textarea"
       />
       <p className="text-right text-xs text-slate-400">
         {count > 130 ? `${count} / 140` : null}
