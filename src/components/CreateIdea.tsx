@@ -25,6 +25,7 @@ export default function CreateIdea({ setIdea, ideas }: Props) {
 
     event.currentTarget.reset();
     inputEl.current?.focus();
+    setDescValue("");
 
     setIdea([...ideas, ideaData]);
   }
