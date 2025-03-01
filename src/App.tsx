@@ -97,6 +97,3 @@ function App() {
 }
 
 export default App;
-
-// click button
-// open modal with form

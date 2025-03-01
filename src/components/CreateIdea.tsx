@@ -47,6 +47,7 @@ export default function CreateIdea({ setIdea, ideas }: Props) {
           id="idea"
           name="idea"
           ref={inputEl}
+          maxLength={28}
           data-testid="title-input"
         />
         <label className="mb-1 text-sm" htmlFor="description">

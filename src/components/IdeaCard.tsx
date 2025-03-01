@@ -41,6 +41,7 @@ export default function IdeaCard({ card, deleteCard, updateCard }: Props) {
           className="text-lg font-medium"
           type="text"
           value={title}
+          maxLength={28}
           onChange={handleChange}
           data-testid="card-input"
         />
@@ -56,12 +57,18 @@ export default function IdeaCard({ card, deleteCard, updateCard }: Props) {
         onChange={handleChange}
         data-testid="card-textarea"
       />
-      <p className="text-right text-xs text-slate-400">
-        {count > 130 ? `${count} / 140` : null}
-      </p>
+      {count > 130 ? (
+        <p
+          className="text-right text-xs text-slate-400"
+          data-testid="char-count"
+        >
+          {count} / 140{" "}
+        </p>
+      ) : null}
       <button
         className="mt-2 rounded-md bg-black px-2 py-3 text-slate-50 hover:bg-slate-900"
         onClick={() => deleteCard(card.id)}
+        data-testid="delete-button"
       >
         Delete
       </button>
