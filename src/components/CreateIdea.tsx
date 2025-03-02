@@ -1,7 +1,16 @@
 import { v4 as uuidv4 } from "uuid";
-import { useRef, useState } from "react";
+import { z } from "zod";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 import { Idea } from "../App";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const schema = z.object({
+  title: z.string().max(28).nonempty(),
+  description: z.string().max(140),
+});
+
+type FormFields = z.infer<typeof schema>;
 
 type Props = {
   setIdea: (data: Idea[]) => void;
@@ -9,72 +18,74 @@ type Props = {
 };
 
 export default function CreateIdea({ setIdea, ideas }: Props) {
-  const inputEl = useRef<HTMLInputElement>(null);
-  const [descValue, setDescValue] = useState("");
+  const {
+    register,
+    handleSubmit,
+    setFocus,
+    formState: { errors },
+    reset,
+  } = useForm<FormFields>({
+    resolver: zodResolver(schema),
+  });
 
-  function addIdea(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
+  const onSubmit: SubmitHandler<FormFields> = (data) => {
+    console.log(data);
 
     const ideaData: Idea = {
       id: uuidv4(),
-      title: String(formData.get("idea")),
-      desc: String(formData.get("description")),
+      title: String(data.title),
+      desc: String(data.description),
       updated: new Date(),
     };
 
-    event.currentTarget.reset();
-    inputEl.current?.focus();
-    setDescValue("");
-
     setIdea([...ideas, ideaData]);
-  }
+    setFocus("title");
+    reset();
+  };
 
   return (
     <div className="flex min-w-[380px] flex-col rounded-lg bg-black p-4 text-left text-slate-200">
       <h1 className="border-b border-slate-800 text-lg font-medium">
         Create idea
       </h1>
-      <form className="mt-2 flex flex-col" onSubmit={addIdea}>
+      <form className="mt-2 flex flex-col" onSubmit={handleSubmit(onSubmit)}>
         <label className="mb-1 text-sm" htmlFor="idea">
           Idea:
         </label>
         <input
-          required
           autoFocus
-          placeholder="Create an idea board website"
-          className="mb-2 rounded-sm border border-slate-400 bg-slate-50 p-2 text-sm text-slate-900"
           type="text"
-          id="idea"
-          name="idea"
-          ref={inputEl}
-          maxLength={28}
+          id="title"
+          className="mb-2 rounded-sm border border-slate-400 bg-slate-50 p-2 text-sm text-slate-900"
+          placeholder="Create an idea board website"
+          {...register("title", { required: true, maxLength: 28 })}
           data-testid="title-input"
         />
+        {errors.title && (
+          <div className="pb-1 text-xs text-red-500">
+            {errors.title.message}
+          </div>
+        )}
         <label className="mb-1 text-sm" htmlFor="description">
           Description:
         </label>
         <textarea
-          required
-          placeholder="A place where I can put my ideas and sort them alphabetically and creation date."
+          placeholder="e.g. a place to put my ideas."
           className="resize-none rounded-sm border border-slate-400 bg-slate-50 p-2 text-sm text-slate-900"
-          id="description"
-          name="description"
-          value={descValue}
-          onChange={(e) => setDescValue(e.target.value)}
-          maxLength={140}
+          {...register("description", { maxLength: 140 })}
           data-testid="description-input"
         />
-        {descValue.length >= 130 ? (
-          <p className="mt-2 text-right text-xs text-slate-500">
-            {descValue.length}/140
-          </p>
-        ) : null}
+        {errors.description && (
+          <div className="pb-1 text-xs text-red-500">
+            {errors.description.message}
+          </div>
+        )}
         <button
-          className="mt-4 rounded-sm bg-white p-1.5 font-medium text-slate-900 hover:bg-slate-200"
+          type="submit"
+          className="mt-4 rounded-sm bg-white p-2.5 font-medium text-slate-900 hover:bg-slate-200"
           data-testid="submit-button"
         >
-          Create
+          Create idea
         </button>
       </form>
     </div>

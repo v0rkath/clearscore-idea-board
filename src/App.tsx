@@ -51,25 +51,23 @@ function App() {
   }
 
   function sortCards(sortType: SortMethods) {
-    const ideaData = [...ideas];
-
     switch (sortType) {
       case "alpha-desc":
-        return ideaData.sort((a, b) => b.title.localeCompare(a.title));
+        return ideas.toSorted((a, b) => b.title.localeCompare(a.title));
       case "alpha-asc":
-        return ideaData.sort((a, b) => a.title.localeCompare(b.title));
+        return ideas.toSorted((a, b) => a.title.localeCompare(b.title));
       case "time-desc":
-        return ideaData.sort(
+        return ideas.toSorted(
           (a, b) =>
             new Date(b.updated).getTime() - new Date(a.updated).getTime(),
         );
       case "time-asc":
-        return ideaData.sort(
+        return ideas.toSorted(
           (a, b) =>
             new Date(a.updated).getTime() - new Date(b.updated).getTime(),
         );
       default:
-        return [...ideaData];
+        return ideas;
     }
   }
 

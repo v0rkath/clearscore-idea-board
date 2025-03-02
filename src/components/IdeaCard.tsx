@@ -66,7 +66,7 @@ export default function IdeaCard({ card, deleteCard, updateCard }: Props) {
         </p>
       ) : null}
       <button
-        className="mt-2 rounded-md bg-black px-2 py-3 text-slate-50 hover:bg-slate-900"
+        className="mt-2 rounded-md bg-black p-2 text-slate-50 hover:bg-slate-900"
         onClick={() => deleteCard(card.id)}
         data-testid="delete-button"
       >

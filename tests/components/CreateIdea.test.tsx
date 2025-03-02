@@ -1,11 +1,8 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { cleanup, render, screen, waitFor } from "@testing-library/react";
 
-import { userEvent } from "@testing-library/user-event";
-
-import "@testing-library/jest-dom/vitest";
-
 import CreateIdea from "../../src/components/CreateIdea";
+import { userEvent } from "@testing-library/user-event";
 
 const cardData = [
   {

@@ -25,12 +25,6 @@ This test was provided by ClearScore for the Frontend Developer role. Both Tailw
 - Character countdown when the character limit is approaching (140)
 - Toast notification when cards are updated
 
-## Reviewer Information
-
-- Modal was originally used for creating ideas, however, this was removed for a better UX (reference: [modalzmodalzmodalz](https://modalzmodalzmodalz.com/)).
-- `./src/components/ui` files can be ignored as they are from [Shadcn](https://ui.shadcn.com/).
-- `type` used over `interface` for both consistency and the stricter nature of `type` due to having less features.
-
 ## Installation & Commands
 
 `npm i` - install dependencies (run this at the project root)
