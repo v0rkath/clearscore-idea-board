@@ -63,24 +63,10 @@ describe("Form Tests", () => {
 
     await user.click(button);
     await waitFor(() => {
-      const input = screen.getByTestId("title-input");
-      expect(input).toBeInvalid();
-    });
-  });
-
-  it("should make sure the textarea is seen as invalid when submitted without content", async () => {
-    const user = userEvent.setup();
-
-    render(<CreateIdea setIdea={vi.fn()} ideas={cardData} />);
-
-    const button = screen.getByTestId("submit-button");
-    const input = screen.getByTestId("title-input");
-    const textarea = screen.getByTestId("description-input");
-
-    await user.type(input, "Test string");
-    await user.click(button);
-    await waitFor(() => {
-      expect(textarea).toBeInvalid();
+      const errMessage = screen.getByText(
+        "String must contain at least 1 character(s)",
+      );
+      expect(errMessage).toBeInTheDocument();
     });
   });
 

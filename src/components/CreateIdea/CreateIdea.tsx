@@ -6,7 +6,7 @@ import { Idea } from "@/App";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const schema = z.object({
-  title: z.string().max(28).nonempty(),
+  title: z.string().max(32).nonempty(),
   description: z.string().max(140),
 });
 
@@ -24,7 +24,12 @@ export default function CreateIdea({ setIdea, ideas }: Props) {
     setFocus,
     formState: { errors },
     reset,
+    watch,
   } = useForm<FormFields>({
+    defaultValues: {
+      title: "",
+      description: "",
+    },
     resolver: zodResolver(schema),
   });
 
@@ -49,7 +54,7 @@ export default function CreateIdea({ setIdea, ideas }: Props) {
         Create idea
       </h1>
       <form className="mt-2 flex flex-col" onSubmit={handleSubmit(onSubmit)}>
-        <label className="mb-1 text-sm" htmlFor="idea">
+        <label className="mb-1 text-sm" htmlFor="title">
           Idea:
         </label>
         <input
@@ -58,7 +63,7 @@ export default function CreateIdea({ setIdea, ideas }: Props) {
           id="title"
           className="mb-2 rounded-sm border border-slate-400 bg-slate-50 p-2 text-sm text-slate-900"
           placeholder="Create an idea board website"
-          {...register("title", { required: true, maxLength: 28 })}
+          {...register("title", { maxLength: 32 })}
           data-testid="title-input"
         />
         {errors.title && (
@@ -72,9 +77,15 @@ export default function CreateIdea({ setIdea, ideas }: Props) {
         <textarea
           placeholder="e.g. a place to put my ideas."
           className="resize-none rounded-sm border border-slate-400 bg-slate-50 p-2 text-sm text-slate-900"
-          {...register("description", { maxLength: 140 })}
+          {...register("description")}
+          maxLength={140}
           data-testid="description-input"
         />
+        {watch("description")?.length > 130 ? (
+          <p className="mt-0.5 text-right text-xs text-slate-500">
+            {watch("description")?.length} / 140
+          </p>
+        ) : null}
         {errors.description && (
           <div className="pb-1 text-xs text-red-500">
             {errors.description.message}

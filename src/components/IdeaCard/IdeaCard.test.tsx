@@ -1,8 +1,8 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { cleanup, render, screen, waitFor } from "@testing-library/react";
 
-import IdeaCard from "./IdeaCard";
 import { testString } from "../CreateIdea/CreateIdea.test";
+import IdeaCard from "./IdeaCard";
 import { userEvent } from "@testing-library/user-event";
 
 const cardData = {
@@ -67,13 +67,14 @@ describe("Idea Card", () => {
     const description = screen.getByTestId("card-textarea");
     await user.clear(description);
     await user.type(description, testString);
+    await user.click(screen.getByText("Fri Feb 28 2025"));
 
     await waitFor(() => {
       expect(screen.getByTestId("char-count"));
     });
   });
 
-  it("should only allow 28 characters in the title", async () => {
+  it("should only allow 32 characters in the title", async () => {
     const user = userEvent.setup();
 
     render(
@@ -84,7 +85,7 @@ describe("Idea Card", () => {
     await user.type(titleInput, testString);
 
     await waitFor(() => {
-      expect(titleInput.getAttribute("value")?.length).toBe(28);
+      expect(titleInput.getAttribute("value")?.length).toBe(32);
     });
   });
 
