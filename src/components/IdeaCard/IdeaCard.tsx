@@ -1,11 +1,11 @@
 import { toast } from "sonner";
 import { useState } from "react";
 
-import { Idea } from "../App";
+import { Idea } from "../../App";
 
 type Props = {
   card: Idea;
-  deleteCard: (id: string) => void;
+  deleteCard: (id: string, title: string) => void;
   updateCard: (updatedIdea: Idea) => void;
 };
 
@@ -24,10 +24,8 @@ export default function IdeaCard({ card, deleteCard, updateCard }: Props) {
       toast(`Updated Title: '${card.title}' Idea.`, {
         description: `'${card.title}' -> '${value}'`,
       });
-      card.title = value;
     } else if (type == "textarea") {
       setDesc(value);
-      card.desc = value;
       toast(`Updated Description: '${card.title}' Idea.`);
     }
 
@@ -67,7 +65,7 @@ export default function IdeaCard({ card, deleteCard, updateCard }: Props) {
       ) : null}
       <button
         className="mt-2 rounded-md bg-black p-2 text-slate-50 hover:bg-slate-900"
-        onClick={() => deleteCard(card.id)}
+        onClick={() => deleteCard(card.id, card.title)}
         data-testid="delete-button"
       >
         Delete

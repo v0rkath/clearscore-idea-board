@@ -1,10 +1,10 @@
-import { SortMethods } from "../App";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "../components/ui/dropdown-menu";
+} from "../ui/dropdown-menu";
+import { SortMethods } from "@/utils/sorting";
 
 type Props = {
   setSort: (sortType: SortMethods) => void;

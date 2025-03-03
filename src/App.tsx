@@ -1,10 +1,11 @@
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
 
-import CreateIdea from "./components/CreateIdea";
-import IdeaCard from "./components/IdeaCard";
-import Navbar from "./components/Navbar";
+import CreateIdea from "./components/CreateIdea/CreateIdea";
+import IdeaCard from "./components/IdeaCard/IdeaCard";
+import Navbar from "./components/Navbar/Navbar";
 import { Toaster } from "./components/ui/sonner";
+import { sortCards, SortMethods } from "./utils/sorting";
 
 export type Idea = {
   id: string;
@@ -12,8 +13,6 @@ export type Idea = {
   desc: string;
   updated: Date;
 };
-
-export type SortMethods = "alpha-desc" | "alpha-asc" | "time-desc" | "time-asc";
 
 function App() {
   const [ideas, setIdeas] = useState<Idea[]>(() => {
@@ -40,38 +39,15 @@ function App() {
     setIdeas(cards);
   }
 
-  function deleteCard(id: string) {
-    const cards = [...ideas];
-    const index = cards.findIndex((card) => card.id === id);
-    cards.splice(index, 1);
-    // .filter() not used in order to have access to the card title for the toast
-    setIdeas(cards);
+  function deleteCard(id: string, title: string) {
+    const filteredIdeas = ideas.filter((card) => card.id !== id);
 
-    toast(`Deleted: ${ideas[index].title} Idea`);
+    setIdeas(filteredIdeas);
+
+    toast(`Deleted: ${title} Idea`);
   }
 
-  function sortCards(sortType: SortMethods) {
-    switch (sortType) {
-      case "alpha-desc":
-        return ideas.toSorted((a, b) => b.title.localeCompare(a.title));
-      case "alpha-asc":
-        return ideas.toSorted((a, b) => a.title.localeCompare(b.title));
-      case "time-desc":
-        return ideas.toSorted(
-          (a, b) =>
-            new Date(b.updated).getTime() - new Date(a.updated).getTime(),
-        );
-      case "time-asc":
-        return ideas.toSorted(
-          (a, b) =>
-            new Date(a.updated).getTime() - new Date(b.updated).getTime(),
-        );
-      default:
-        return ideas;
-    }
-  }
-
-  const sortedCards = sortCards(selectedSort);
+  const sortedCards = sortCards(selectedSort, ideas);
 
   return (
     <div className="h-svh">

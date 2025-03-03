@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from "uuid";
 import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 
-import { Idea } from "../App";
+import { Idea } from "@/App";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const schema = z.object({
