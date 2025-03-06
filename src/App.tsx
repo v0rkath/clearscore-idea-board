@@ -1,9 +1,9 @@
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
 
-import CreateIdea from "./components/CreateIdea/CreateIdea";
-import IdeaCard from "./components/IdeaCard/IdeaCard";
-import Navbar from "./components/Navbar/Navbar";
+import { CreateIdea } from "./components/CreateIdea";
+import { IdeaCard } from "./components/IdeaCard";
+import { Navbar } from "./components/Navbar";
 import { Toaster } from "./components/ui/sonner";
 import { sortCards, SortMethods } from "./utils/sorting";
 
@@ -25,17 +25,17 @@ function App() {
     localStorage.setItem("ideas", JSON.stringify(ideas));
   }, [ideas]);
 
-  function updateCard(updatedIdea: Idea) {
-    const cards = ideas.map((idea) =>
-      idea.id === updatedIdea.id
+  function updateCard({ id, title, desc }: Idea) {
+    const cards = ideas.map((idea) => {
+      return idea.id === id
         ? {
             ...idea,
-            title: updatedIdea.title,
-            desc: updatedIdea.desc,
+            title: title,
+            desc: desc,
             update: new Date(),
           }
-        : idea,
-    );
+        : idea;
+    });
     setIdeas(cards);
   }
 

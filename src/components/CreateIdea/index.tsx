@@ -17,7 +17,7 @@ type Props = {
   ideas: Idea[];
 };
 
-export default function CreateIdea({ setIdea, ideas }: Props) {
+export function CreateIdea({ setIdea, ideas }: Props) {
   const {
     register,
     handleSubmit,
@@ -34,12 +34,10 @@ export default function CreateIdea({ setIdea, ideas }: Props) {
   });
 
   const onSubmit: SubmitHandler<FormFields> = (data) => {
-    console.log(data);
-
     const ideaData: Idea = {
       id: uuidv4(),
-      title: String(data.title),
-      desc: String(data.description),
+      title: data.title,
+      desc: data.description,
       updated: new Date(),
     };
 

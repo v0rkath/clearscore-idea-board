@@ -1,8 +1,8 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { cleanup, render, screen, waitFor } from "@testing-library/react";
 
+import { IdeaCard } from ".";
 import { testString } from "../CreateIdea/CreateIdea.test";
-import IdeaCard from "./IdeaCard";
 import { userEvent } from "@testing-library/user-event";
 
 const cardData = {

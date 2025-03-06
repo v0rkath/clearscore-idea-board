@@ -19,7 +19,7 @@ type Props = {
 
 type FormFields = z.infer<typeof schema>;
 
-export default function IdeaCard({ card, deleteCard, updateCard }: Props) {
+export function IdeaCard({ card, deleteCard, updateCard }: Props) {
   const {
     register,
     watch,
