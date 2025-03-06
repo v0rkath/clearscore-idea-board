@@ -30,8 +30,8 @@ function App() {
       return idea.id === id
         ? {
             ...idea,
-            title: title,
-            desc: desc,
+            title,
+            desc,
             update: new Date(),
           }
         : idea;
